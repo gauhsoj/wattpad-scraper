@@ -1,0 +1,30 @@
+{
+  "name": "wattpad-scraper",
+  "version": "1.0.3",
+  "description": "A Node.js library for scraping Wattpad stories and content",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "wattpad",
+    "scraper",
+    "stories",
+    "books",
+    "reading"
+  ],
+  "author": {
+    "name": "Deku",
+    "url": "https://facebook.com/joshg101"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "cheerio": "^1.0.0-rc.12"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.6",
+    "jest": "^29.7.0"
+  }
+}
