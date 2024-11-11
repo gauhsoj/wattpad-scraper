@@ -22,7 +22,7 @@ npm install wattpad-scraper
 ### JavaScript (CommonJS)
 
 ```javascript
- const WattpadScraper = require('wattpad-scraper');
+const WattpadScraper = require('wattpad-scraper');
 
 const scraper = new WattpadScraper();
 
@@ -78,7 +78,7 @@ searchStories();
 ### TypeScript
 
 ```typescript
- import WattpadScraper from 'wattpad-scraper';
+import WattpadScraper from 'wattpad-scraper';
 
 const scraper = new WattpadScraper();
 
