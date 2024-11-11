@@ -9,7 +9,7 @@ npm install wattpad-scraper
 ```
 ## Features
 
-- 📖 Read story chapters
+- 📖 Read story chapters (with multi-page support)
 - 📑 Get all parts/chapters of a story
 - 🔍 Search for stories
 - ⚡ Promise-based API
@@ -22,15 +22,19 @@ npm install wattpad-scraper
 ### JavaScript (CommonJS)
 
 ```javascript
-const WattpadScraper = require('wattpad-scraper');
+ const WattpadScraper = require('wattpad-scraper');const WattpadScraper = require('wattpad-scraper');
 
 const scraper = new WattpadScraper();
 
-// Read a chapter
+// Read a chapter (including all pages)
 async function readChapter() {
   try {
-    const content = await scraper.read('https://www.wattpad.com/1362020763-hell-university-chapter-01');
-    console.log(content);
+    const pages = await scraper.read('https://www.wattpad.com/1362020763-hell-university-chapter-01');
+    pages.forEach(page => {
+      console.log(`\nPage ${page.pageNumber}:`);
+      console.log(`URL: ${page.url}`);
+      console.log(`Content: ${page}`);
+    });
   } catch (error) {
     console.error('Error:', error.message);
   }
@@ -56,7 +60,7 @@ async function searchStories() {
     stories.forEach((story, index) => {
       console.log(`\n${index + 1}. ${story.title}`);
       console.log(`Author: ${story.author}`);
-      console.log(`Thumbnail: ${story.thumbnail}`)
+      console.log(`Thumbnail: ${story.thumbnail}`);
       console.log(`Link: ${story.link}`);
       console.log(`Reads: ${story.reads}`);
       console.log(`Votes: ${story.votes}`);
@@ -78,14 +82,18 @@ searchStories();
 ### TypeScript
 
 ```typescript
-import WattpadScraper from 'wattpad-scraper';
+ import WattpadScraper from 'wattpad-scraper';import WattpadScraper from 'wattpad-scraper';
 
 const scraper = new WattpadScraper();
 
 async function readChapter(): Promise<void> {
   try {
-    const content = await scraper.read('https://www.wattpad.com/1362020763-hell-university-chapter-01');
-    console.log(content);
+    const pages = await scraper.read('https://www.wattpad.com/1362020763-hell-university-chapter-01');
+    pages.forEach(page => {
+      console.log(`\nPage ${page.pageNumber}:`);
+      console.log(`URL: ${page.url}`);
+      console.log(`Content: ${page}`);
+    });
   } catch (error) {
     console.error('Error:', (error as Error).message);
   }
@@ -109,7 +117,7 @@ async function searchStories(): Promise<void> {
     stories.forEach((story, index) => {
       console.log(`\n${index + 1}. ${story.title}`);
       console.log(`Author: ${story.author}`);
-      console.log(`Thumbnail: ${story.thumbnail}`)
+      console.log(`Thumbnail: ${story.thumbnail}`);
       console.log(`Link: ${story.link}`);
       console.log(`Reads: ${story.reads}`);
       console.log(`Votes: ${story.votes}`);
@@ -130,12 +138,19 @@ searchStories();
 
 ## API Reference
 
-### `read(url: string): Promise<string>`
+### `read(url: string): Promise<Array<{pageNumber: number, url: string, content: string}>>`
 
-Reads the content of a specific Wattpad story chapter.
+Reads the content of a specific Wattpad story chapter, including all available pages.
 
 - `url`: The URL of the chapter to read
-- Returns: Promise resolving to the chapter's text content
+- Returns: Promise resolving to an array of page objects, each containing:
+
+- `pageNumber`: The page number
+- `url`: The URL of the specific page
+- `content`: The text content of the page
+
+
+
 
 
 ### `getParts(url: string): Promise<Array<{title: string, link: string}>>`

@@ -3,24 +3,41 @@ const cheerio = require('cheerio');
 
 class WattpadScraper {
     /**
-     * Reads the content of a specific Wattpad story chapter
-     * @param {string} url - The URL of the chapter to read
-     * @returns {Promise<string>} - The extracted text content
+     * Reads the content of a specific Wattpad story chapter, including all available pages
+     * @param {string} initialUrl - The URL of the chapter to read
+     * @returns {Promise<Array<{pageNumber: number, url: string, content: string}>>} - Array of page contents
      */
-    async read(url) {
-        try {
-            const response = await axios.get(url);
-            const html = response.data;
-            const $ = cheerio.load(html);
-            const paragraphs = $('p[data-p-id]');
+    async read(initialUrl) {
+        const allContent = [];
+        const maxPagesToCheck = 99;
 
-            return paragraphs
-                .map((_, element) => $(element).text().trim())
-                .get()
-                .join(' ');
-        } catch (error) {
-            throw new Error(error.message);
+        for (let pageNum = 1; pageNum <= maxPagesToCheck; pageNum++) {
+            const pageUrl = `${initialUrl}/page/${pageNum}`;
+            try {
+                const response = await axios.get(pageUrl);
+                const $ = cheerio.load(response.data);
+                const pageContent = $('p[data-p-id]')
+                    .map((_, element) => $(element).text().trim())
+                    .get()
+                    .join(' ');
+
+                if (pageContent.length > 0) {
+                    allContent.push({
+                        pageNumber: pageNum,
+                        url: pageUrl,
+                        content: pageContent
+                    });
+                } else {
+                    break;
+                }
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            } catch (error) {
+                console.error(`Error scraping page ${pageNum}: ${error.message}`);
+                break;
+            }
         }
+
+        return allContent;
     }
 
     /**

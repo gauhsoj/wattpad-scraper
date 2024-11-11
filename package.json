@@ -1,6 +1,6 @@
 {
   "name": "wattpad-scraper",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A Node.js library for scraping Wattpad stories and content",
   "main": "src/index.js",
   "types": "src/index.d.ts",
