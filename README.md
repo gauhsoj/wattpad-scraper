@@ -22,23 +22,25 @@ npm install wattpad-scraper
 ### JavaScript (CommonJS)
 
 ```javascript
- const WattpadScraper = require('wattpad-scraper');const WattpadScraper = require('wattpad-scraper');
+ const WattpadScraper = require('wattpad-scraper');
 
 const scraper = new WattpadScraper();
 
 // Read a chapter (including all pages)
 async function readChapter() {
   try {
-    const pages = await scraper.read('https://www.wattpad.com/1362020763-hell-university-chapter-01');
+    const initialUrl = 'https://www.wattpad.com/1362020763-hell-university-chapter-01';
+    const pages = await scraper.read(initialUrl);
+
     pages.forEach(page => {
-      console.log(`\nPage ${page.pageNumber}:`);
-      console.log(`URL: ${page.url}`);
-      console.log(`Content: ${page}`);
+      console.log(`Page ${page.pageNumber}: ${page.url}`);
+      console.log(page.content + "\n");
     });
   } catch (error) {
     console.error('Error:', error.message);
   }
 }
+  
 
 // Get all parts of a story
 async function getStoryParts() {
@@ -82,7 +84,7 @@ searchStories();
 ### TypeScript
 
 ```typescript
- import WattpadScraper from 'wattpad-scraper';import WattpadScraper from 'wattpad-scraper';
+ import WattpadScraper from 'wattpad-scraper';
 
 const scraper = new WattpadScraper();
 
