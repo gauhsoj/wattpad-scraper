@@ -7,6 +7,12 @@ A powerful Node.js library for scraping Wattpad stories, chapters, and search re
 ```bash
 npm install wattpad-scraper
 ```
+To update:
+
+```bash
+npm install wattpad-scraper@latest
+```
+
 ## Features
 
 - 📖 Read story chapters (with multi-page support)
