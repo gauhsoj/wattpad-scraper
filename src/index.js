@@ -80,9 +80,9 @@ class WattpadScraper {
 
             return storyCards.map((_, element) => {
                 const $element = $(element);
-                const title = $element.find('.title').text().trim();
+                const title = $element.find('.sr-only').first().text().trim();
                 const link = 'https://www.wattpad.com' + $element.attr('href');
-                const description = $element.find('.description').text().trim();
+                const description = $element.find('.description').first().text().trim();
                 const thumbnail = $element.find('.cover img').attr('src') || '';
                 const stats = $element.find('.new-story-stats .stats-item');
                 let reads = '', votes = '', parts = '';
